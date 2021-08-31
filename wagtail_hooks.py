@@ -15,6 +15,6 @@ class PageNotFoundEntryAdmin(ModelAdmin):
     model = PageNotFoundEntry
     menu_label = '404 Redirects'
     list_display = (
-        'url', 'site', 'hits', 'redirect_to', 'permanent', 'created')
-    list_filter = ('permanent', 'site')
+        'url', 'site', 'hits', 'redirect_to', 'permanent', 'created', 'regular_expression')
+    list_filter = ('permanent', 'regular_expression', 'site')
     menu_icon = 'fa-frown-o'
