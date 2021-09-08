@@ -72,7 +72,7 @@ class PageNotFoundRedirectMiddleware:
                         return HttpResponseRedirect(entry.redirect_to)
 
             if redirect['url'] == full_path:
-                if redirect['redirect_to_url'].startswith('http'):
+                if redirect['redirect_to_url'].startswith('http') or redirect['redirect_to_url'].startswith('https'):
                     return http.HttpResponsePermanentRedirect(redirect['redirect_to_url'])
                 else:
                     return http.HttpResponsePermanentRedirect(http_host + redirect['redirect_to_url'])
@@ -82,7 +82,7 @@ class PageNotFoundRedirectMiddleware:
                 slashed_full_path = full_path[:path_len] + '/' + full_path[path_len:]
 
                 if redirect['url'] == slashed_full_path:
-                    if redirect['redirect_to_url'].startswith('http'):
+                    if redirect['redirect_to_url'].startswith('http') or redirect['redirect_to_url'].startswith('https'):
                         return http.HttpResponsePermanentRedirect(redirect['redirect_to_url'])
                     else:
                         return http.HttpResponsePermanentRedirect(http_host + redirect['redirect_to_url'])
@@ -111,7 +111,7 @@ class PageNotFoundRedirectMiddleware:
                             return HttpResponseRedirect(entry.redirect_to)
                 new_path = redirect['redirect_to_url'].replace('$', '\\')
                 replaced_path = re.sub(old_path, new_path, full_path)
-                if redirect['redirect_to_url'].startswith('http'):
+                if redirect['redirect_to_url'].startswith('http') or redirect['redirect_to_url'].startswith('https'):
                     return http.HttpResponsePermanentRedirect(replaced_path)
                 else:
                     return http.HttpResponsePermanentRedirect(http_host + replaced_path)
