@@ -65,6 +65,8 @@ class PageNotFoundRedirectMiddleware:
 
         for redirect in redirects:
             if entry:
+                if entry.redirect_to is None:
+                    return self.response(request)
                 if entry.redirect_to:
                     if entry.permanent:
                         return HttpResponsePermanentRedirect(entry.redirect_to)
