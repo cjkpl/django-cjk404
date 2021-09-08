@@ -29,7 +29,7 @@ class PageNotFoundRedirectMiddleware:
     def __call__(self, request):
         url = request.path
         if self._check_url_in_blacklist(url):
-            return self.response
+            return self.response(request)
         else:
             return self.handle_request(request)
 
