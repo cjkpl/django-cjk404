@@ -28,10 +28,10 @@ class PageNotFoundEntry(models.Model):
         verbose_name="Redirect to Page",
     )
 
-    created = models.DateTimeField(auto_now_add=True)
-    last_hit = models.DateTimeField(verbose_name="Last Hit")
+    created = models.DateTimeField(auto_now_add=True, blank=True, verbose_name="Created")
+    last_hit = models.DateTimeField(auto_now_add=True, blank=True, verbose_name="Last Hit")
     hits = models.PositiveIntegerField(
-        default=1, verbose_name="# Hits"
+        default=0, verbose_name="# Hits"
     )
     permanent = models.BooleanField(default=False)
 
@@ -50,10 +50,9 @@ class PageNotFoundEntry(models.Model):
         ),
         MultiFieldPanel(
             [
-                FieldPanel("last_hit"),
                 FieldPanel("hits"),
             ],
-            heading="general",
+            heading="Hit stats",
             classname="collapsible",
         ),
         MultiFieldPanel(

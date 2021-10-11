@@ -34,7 +34,7 @@ class PageNotFoundRedirectMiddleware:
             return self.handle_request(request)
 
     def _check_url_in_blacklist(self, url):
-        return any([pattern.match(url) for pattern in self.blacklist_url_patterns])
+        return any(pattern.match(url) for pattern in self.blacklist_url_patterns)
 
     def handle_request(self, request):
         response = self.response(request)
@@ -43,6 +43,8 @@ class PageNotFoundRedirectMiddleware:
 
         url = request.path
         site = Site.find_for_request(request)
+
+        # this does not work for regexp entries, needs to be repeated in regexp section
         entry = PageNotFoundEntry.objects.filter(
             site=site, url=url).first()
         if entry:
@@ -103,6 +105,13 @@ class PageNotFoundRedirectMiddleware:
                 continue
 
             if re.match(redirect['url'], full_path):
+
+                entry = PageNotFoundEntry.objects.get(id=redirect['id'])
+                if entry:  # in theory, this should always be true - to be tested!
+                    entry.hits += 1
+                    entry.last_hit = now()
+                    entry.save()
+
                 if redirect['redirect_to_page_id'] is not None:
                     entry = PageNotFoundEntry.objects.filter(
                         redirect_to_page_id=redirect['redirect_to_page_id'], id=redirect['id']).first()
@@ -120,6 +129,6 @@ class PageNotFoundRedirectMiddleware:
 
         if response.status_code == 404 and not entry:
             PageNotFoundEntry.objects.create(
-                site=site, url=url, last_hit=now())
+                site=site, url=url, hits=1)
 
         return response
