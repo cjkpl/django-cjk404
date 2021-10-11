@@ -1,44 +1,70 @@
 from django.db import models
-from wagtail.admin.edit_handlers import (
-    FieldPanel, MultiFieldPanel, PageChooserPanel)
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core.models import Page, Site
 
 
 class PageNotFoundEntry(models.Model):
     site = models.ForeignKey(
-        Site, related_name='pagenotfound_entries', on_delete=models.CASCADE, verbose_name="Website / Domain")
+        Site,
+        related_name="pagenotfound_entries",
+        on_delete=models.CASCADE,
+        verbose_name="Site",
+    )
 
-    url = models.CharField(max_length=200, verbose_name="Old Path / Redirect From (URL)")
-    redirect_to_url = models.CharField(max_length=200, null=True, blank=True, verbose_name="New Path / Redirect To ("
-                                                                                           "URL)")
+    url = models.CharField(
+        max_length=200, verbose_name="Redirect from URL"
+    )
+    redirect_to_url = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name="Redirect to URL",
+    )
     redirect_to_page = models.ForeignKey(
-        Page, on_delete=models.CASCADE, null=True, blank=True, verbose_name="Redirect To (Wagtail Page)")
+        Page,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name="Redirect to Page",
+    )
 
     created = models.DateTimeField(auto_now_add=True)
-    last_hit = models.DateTimeField(verbose_name="Last Hit (Last Page View)")
-    hits = models.PositiveIntegerField(default=1, verbose_name="Number of Hits (Page Views)")
+    last_hit = models.DateTimeField(verbose_name="Last Hit")
+    hits = models.PositiveIntegerField(
+        default=1, verbose_name="# Hits"
+    )
     permanent = models.BooleanField(default=False)
 
-    regular_expression = models.BooleanField(default=False, verbose_name="Regular Expression")
+    regular_expression = models.BooleanField(
+        default=False, verbose_name="RegExp"
+    )
 
     panels = [
         MultiFieldPanel(
             [
-                FieldPanel('site'),
-                FieldPanel('url'),
-                FieldPanel('regular_expression'),
-            ], heading='Old Path / Redirect From'),
+                FieldPanel("site"),
+                FieldPanel("url"),
+                FieldPanel("regular_expression"),
+            ],
+            heading="Old Path / Redirect From",
+        ),
         MultiFieldPanel(
             [
-                FieldPanel('last_hit'),
-                FieldPanel('hits'),
-            ], heading='general', classname='collapsible'),
+                FieldPanel("last_hit"),
+                FieldPanel("hits"),
+            ],
+            heading="general",
+            classname="collapsible",
+        ),
         MultiFieldPanel(
             [
-                PageChooserPanel('redirect_to_page'),
-                FieldPanel('redirect_to_url'),
-                FieldPanel('permanent'),
-            ], heading='New Path / Redirect To', classname='collapsible'),
+                PageChooserPanel("redirect_to_page"),
+                FieldPanel("redirect_to_url"),
+                FieldPanel("permanent"),
+            ],
+            heading="New Path / Redirect To",
+            classname="collapsible",
+        ),
     ]
 
     @property
@@ -52,4 +78,4 @@ class PageNotFoundEntry(models.Model):
 
     class Meta:
         verbose_name_plural = "page not found redirects"
-        ordering = ('-hits',)
+        ordering = ("-hits",)
