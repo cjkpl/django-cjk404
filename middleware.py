@@ -42,6 +42,8 @@ class PageNotFoundRedirectMiddleware:
             return response
 
         url = request.path
+        if url.endswith('/') and len(url) > 1:
+            url = url[:-1]
         site = Site.find_for_request(request)
 
         # this does not work for regexp entries, needs to be repeated in regexp section
