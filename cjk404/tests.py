@@ -5,57 +5,72 @@ from unittest.case import skipUnless
 from django.conf import settings
 from django.test import TestCase
 from django.test.utils import override_settings
-from django.utils import six
 from django.core.cache import cache
+from wagtail.core.models import Site
 
-from .middleware import DJANGO_REGEX_REDIRECTS_CACHE_KEY, DJANGO_REGEX_REDIRECTS_CACHE_REGEX_KEY
+
+from .middleware import (
+    DJANGO_REGEX_REDIRECTS_CACHE_KEY,
+    DJANGO_REGEX_REDIRECTS_CACHE_REGEX_KEY,
+)
 from .models import PageNotFoundEntry
 
 
-class RegexRedirectTests(TestCase):
-
+class Cjk404RedirectTests(TestCase):
     def setUp(self):
         cache.delete(DJANGO_REGEX_REDIRECTS_CACHE_KEY)
         cache.delete(DJANGO_REGEX_REDIRECTS_CACHE_REGEX_KEY)
 
     def test_model(self):
+        site = Site.objects.filter(is_default_site=True)[0]
         r1 = PageNotFoundEntry.objects.create(
-            url='/initial', redirect_to_url='/new_target')
-        self.assertEqual(six.text_type(r1), "/initial ---> /new_target")
+            url="/initial", redirect_to_url="/new_target", site=site
+        )
+        self.assertEqual(r1.__str__(), "/initial ---> /new_target")
 
-    # def test_redirect(self):
-    #     PageNotFoundEntry.objects.create(
-    #         url='/initial', redirect_to_url='/new_target')
-    #     response = self.client.get('/initial')
-    #     self.assertRedirects(response,
-    #                          '/new_target', status_code=301, target_status_code=404)
+    def redirect_url(
+        self,
+        permanent,
+        old_url,
+        redirect_url,
+        requested_url,
+        status_code=None,
+        regexp=False,
+    ):
+        site = Site.objects.filter(is_default_site=True)[0]
+        pnfe = PageNotFoundEntry.objects.create(
+            permanent=permanent,
+            url=old_url,
+            redirect_to_url=redirect_url,
+            site=site,
+        )
+        self.assertEqual(pnfe.hits, 0)
+        response = self.client.get(requested_url)
+        if status_code:
+            self.assertRedirects(
+                response, redirect_url, status_code=status_code, target_status_code=404
+            )
+        else:
+            self.assertRedirects(response, redirect_url)
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
-    # @override_settings(APPEND_SLASH=True)
-    # def test_redirect_with_append_slash(self):
-    #     PageNotFoundEntry.objects.create(
-    #         old_path='/initial/', new_path='/new_target/')
-    #     response = self.client.get('/initial')
-    #     self.assertRedirects(response,
-    #                          '/new_target/', status_code=301, target_status_code=404)
-    #
-    # @override_settings(APPEND_SLASH=True)
-    # def test_redirect_with_append_slash_and_query_string(self):
-    #     PageNotFoundEntry.objects.create(
-    #         old_path='/initial/?foo', new_path='/new_target/')
-    #     response = self.client.get('/initial?foo')
-    #     self.assertRedirects(response,
-    #                          '/new_target/', status_code=301, target_status_code=404)
-    #
+    def test_redirect(self):
+        self.redirect_url(False, "/initial1/", "/new_target/", "/initial1/", 302)
+
+    def test_redirect_premanent(self):
+        self.redirect_url(True, "/initial2/", "/new_target/", "/initial2/", 301)
+
     # def test_regular_expression(self):
-    #     PageNotFoundEntry.objects.create(
-    #         old_path='/news/index/(\d+)/(.*)/',
-    #         new_path='/my/news/$2/',
-    #         regular_expression=True)
-    #     response = self.client.get('/news/index/12345/foobar/')
-    #     self.assertRedirects(response,
-    #                          '/my/news/foobar/',
-    #                          status_code=301, target_status_code=404)
-    #     redirect = PageNotFoundEntry.objects.get(regular_expression=True)
+    #     self.redirect_url(
+    #         False,
+    #         "/news/index/[a-z]/",
+    #         "/my/news/$1/",
+    #         "/news/index/b/",
+    #         302,
+    #         True,
+    #     )
+
     #
     # def test_fallback_redirects(self):
     #     """

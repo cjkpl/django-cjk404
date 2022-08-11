@@ -11,9 +11,7 @@ class PageNotFoundEntry(models.Model):
         verbose_name="Site",
     )
 
-    url = models.CharField(
-        max_length=200, verbose_name="Redirect from URL"
-    )
+    url = models.CharField(max_length=200, verbose_name="Redirect from URL")
     redirect_to_url = models.CharField(
         max_length=200,
         null=True,
@@ -28,16 +26,16 @@ class PageNotFoundEntry(models.Model):
         verbose_name="Redirect to Page",
     )
 
-    created = models.DateTimeField(auto_now_add=True, blank=True, verbose_name="Created")
-    last_hit = models.DateTimeField(auto_now_add=True, blank=True, verbose_name="Last Hit")
-    hits = models.PositiveIntegerField(
-        default=0, verbose_name="# Hits"
+    created = models.DateTimeField(
+        auto_now_add=True, blank=True, verbose_name="Created"
     )
+    last_hit = models.DateTimeField(
+        auto_now_add=True, blank=True, verbose_name="Last Hit"
+    )
+    hits = models.PositiveIntegerField(default=0, verbose_name="# Hits")
     permanent = models.BooleanField(default=False)
 
-    regular_expression = models.BooleanField(
-        default=False, verbose_name="RegExp"
-    )
+    regular_expression = models.BooleanField(default=False, verbose_name="RegExp")
 
     panels = [
         MultiFieldPanel(
@@ -73,7 +71,7 @@ class PageNotFoundEntry(models.Model):
         return self.redirect_to_url
 
     def __str__(self):
-        return self.url
+        return f"{self.url} ---> {self.redirect_to}"
 
     class Meta:
         verbose_name_plural = "page not found redirects"

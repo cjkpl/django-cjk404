@@ -13,5 +13,3 @@ media
 *.py[cod] 
 *$py.class
 
-dist
-django_cjk404.egg-info
