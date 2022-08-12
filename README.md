@@ -55,11 +55,14 @@ This package is used for the admin panel itself.
 !["Edit Redirect" in the Backend](./readme/Edit%20Redirect.jpg)
 
 ### Usage
-0. Get the app from PyPI:
+
+#### Fresh install
+
+1. Get the app from PyPI:
 ```pip install django-cjk404```
 
 
-1. Add 'cjk404' to the INSTALLED_APPS:
+2. Add 'cjk404' to the INSTALLED_APPS:
 
 ```python
 INSTALLED_APPS = [
@@ -70,7 +73,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Add the supplied middleware. You may also want to disable Wagtail's default ```RedirectMiddleware```:
+3. Add the supplied middleware. You may also want to disable Wagtail's default ```RedirectMiddleware```:
 
 ```python
 MIDDLEWARE = [
@@ -79,12 +82,19 @@ MIDDLEWARE = [
 ]
 ```
 
-3. Run the migrations:
+4. Run the migrations:
 ```python
 python manage.py migrate
 ```
 
-4. Visit the Wagtail admin area. You should see any 404s recorded in the application, and you can add redirects to them. You can also add your own redirects, e.g. based on regexp.
+5. Visit the Wagtail admin area. You should see any 404s recorded in the application, and you can add redirects to them. You can also add your own redirects, e.g. based on regexp.
+
+#### Upgrade from the old (dj-apps-cjk404) version
+
+1. Remove folder ```apps/cjk404``` with all contents
+2. Change 'apps.cjk404' to 'cjk404' in INSTALLED_APPS.
+3. Get the app from PyPI: ```pip install django-cjk404``
+4. You're done!
 
 ## Development
 
