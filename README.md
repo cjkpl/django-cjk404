@@ -1,6 +1,9 @@
-# Managed 404 Pages with Redirects
+![PyPI - Python Vesion](https://img.shields.io/pypi/pyversions/django-cjk404)
+[![GitHub license](https://img.shields.io/github/license/cjkpl/django-cjk404)](https://github.com/cjkpl/django-cjk404/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/cjkpl/django-cjk404)](https://github.com/cjkpl/django-cjk404/issues) 
 
-![Thank You Page](./readme/404.png)
+
+# Managed 404 Pages with Redirects
 
 ## Description
 
@@ -48,11 +51,11 @@ This package is used for the admin panel itself.
 
 #### "All Redirects" in the Backend
 
-!["All Redirects" in the Backend"](./readme/All%20Redirects.jpg)
+!["All Redirects" in the Backend"](https://raw.githubusercontent.com/cjkpl/django-cjk404/main/docs/All%20Redirects.jpg)
 
 #### "Edit Redirect" in the Backend 
 
-!["Edit Redirect" in the Backend](./readme/Edit%20Redirect.jpg)
+!["Edit Redirect" in the Backend](https://raw.githubusercontent.com/cjkpl/django-cjk404/main/docs/Edit%20Redirect.jpg)
 
 ### Usage
 
