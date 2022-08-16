@@ -67,9 +67,9 @@ class PageNotFoundRedirectMiddleware:
         or None if neither is found."""
 
         if redirect["redirect_to_page_id"] is None:
-            print(
-                f"redirect_to_page_id is None, returning {redirect['redirect_to_url']}"
-            )
+            # print(
+            #     f"redirect_to_page_id is None, returning {redirect['redirect_to_url']}"
+            # )
             return redirect["redirect_to_url"]
 
         try:
@@ -107,8 +107,13 @@ class PageNotFoundRedirectMiddleware:
             if redirect["url"] == full_path:
                 self.updateHitCount(redirect["id"])
 
+                target_redirect_url = self.get_redirect_to_page_or_url(redirect)
+                if not target_redirect_url:
+                    # print("No target redirect url found")
+                    return response  # no redirect found, return 404
+
                 return self.HttpRedirect301302(
-                    request, redirect["redirect_to_url"], redirect["permanent"]
+                    request, target_redirect_url, redirect["permanent"]
                 )
 
             if settings.APPEND_SLASH and not request.path.endswith("/"):
@@ -137,20 +142,20 @@ class PageNotFoundRedirectMiddleware:
             )
 
         for redirect in regular_expressions_redirects:
-            print(f"Checking {redirect['url']} with {full_path}")
+            # print(f"Checking {redirect['url']} with {full_path}")
             try:
                 old_path = re.compile(redirect["url"], re.IGNORECASE)
             except re.error:
                 continue
 
             if old_path.match(full_path):
-                print(f"Matched {redirect['url']} with {full_path}")
+                # print(f"Matched {redirect['url']} with {full_path}")
 
                 self.updateHitCount(redirect["id"])
 
                 target_redirect_url = self.get_redirect_to_page_or_url(redirect)
                 if not target_redirect_url:
-                    print("No target redirect url found")
+                    # print("No target redirect url found")
                     return response  # no redirect found, return 404
 
                 new_path = target_redirect_url.replace("$", "\\")
@@ -159,7 +164,8 @@ class PageNotFoundRedirectMiddleware:
                     request, replaced_path, redirect["permanent"]
                 )
             else:
-                print(f"Not matched {redirect['url']} with {full_path}")
+                pass
+                # print(f"Not matched {redirect['url']} with {full_path}")
 
         if (
             response.status_code == 404
