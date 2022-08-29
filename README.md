@@ -40,7 +40,7 @@ Below, you can see the classes comparison of those two.
 | • `nr_times_visited`           | • `hits`                     |
 
 ### Testing ###
-Test suites based on source packages are under construction. Some basic tests currently work ok.
+Use either Django test runner (`python manage.py test cjk404`) or pytest.
 
 ### Dependencies
 - wagtail.contrib.modeladmin (https://docs.wagtail.io/en/stable/reference/contrib/modeladmin/index.html)
