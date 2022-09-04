@@ -202,6 +202,7 @@ class Cjk404RedirectTests(TestCase):
             "http://example.com/my/second_project/bar/",
             status_code=302,
             target_status_code=404,
+            fetch_redirect_response=False,
         )
 
         response = self.client.get("/third_project/details/")
@@ -210,4 +211,5 @@ class Cjk404RedirectTests(TestCase):
             "http://example.com/my/third_project/bar/details/",
             status_code=302,
             target_status_code=404,
+            fetch_redirect_response=False,
         )
