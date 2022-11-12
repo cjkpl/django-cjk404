@@ -14,4 +14,5 @@ media
 *$py.class
 
 dist
-django_cjk404.egg-info
+build
+wagtail_cjk404.egg-info

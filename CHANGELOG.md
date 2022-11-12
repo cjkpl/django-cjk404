@@ -8,3 +8,8 @@
 * Added new field: fallback_redirect
 * Added tests for fallback_redirect
 * Added tests for regexp
+
+# 22.11.0 (2022-11-12)
+* Switched to calendar versioning
+* Renamed package from django-cjk404 to wagtail-cjk404
+* Extended the url field from 200 to 400 characters to allow for longer urls/avoid exceptions

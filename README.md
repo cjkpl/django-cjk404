@@ -1,6 +1,6 @@
-![PyPI - Python Vesion](https://img.shields.io/pypi/pyversions/django-cjk404)
-[![GitHub license](https://img.shields.io/github/license/cjkpl/django-cjk404)](https://github.com/cjkpl/django-cjk404/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/cjkpl/django-cjk404)](https://github.com/cjkpl/django-cjk404/issues) 
+![PyPI - Python Vesion](https://img.shields.io/pypi/pyversions/wagtail-cjk404)
+[![GitHub license](https://img.shields.io/github/license/cjkpl/wagtail-cjk404)](https://github.com/cjkpl/wagtail-cjk404/blob/main/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/cjkpl/wagtail-cjk404)](https://github.com/cjkpl/wagtail-cjk404/issues) 
 
 
 # Managed 404 Pages with Redirects
@@ -51,18 +51,18 @@ This package is used for the admin panel itself.
 
 #### "All Redirects" in the Backend
 
-!["All Redirects" in the Backend"](https://raw.githubusercontent.com/cjkpl/django-cjk404/main/docs/All%20Redirects.jpg)
+!["All Redirects" in the Backend"](https://raw.githubusercontent.com/cjkpl/wagtail-cjk404/main/docs/All%20Redirects.jpg)
 
 #### "Edit Redirect" in the Backend 
 
-!["Edit Redirect" in the Backend](https://raw.githubusercontent.com/cjkpl/django-cjk404/main/docs/Edit%20Redirect.jpg)
+!["Edit Redirect" in the Backend](https://raw.githubusercontent.com/cjkpl/wagtail-cjk404/main/docs/Edit%20Redirect.jpg)
 
 ### Usage
 
 #### Fresh install
 
 1. Get the app from PyPI:
-```pip install django-cjk404```
+```pip install wagtail-cjk404```
 
 
 2. Add 'cjk404' to the INSTALLED_APPS:
@@ -96,7 +96,7 @@ python manage.py migrate
 
 1. Remove folder ```apps/cjk404``` with all contents
 2. Change 'apps.cjk404' to 'cjk404' in INSTALLED_APPS.
-3. Get the app from PyPI: ```pip install django-cjk404``
+3. Get the app from PyPI: ```pip install wagtail-cjk404``
 4. You're done!
 
 ## Development
@@ -117,9 +117,9 @@ After you ```git clone``` the repository, use ```load_tests.py``` to call ```boo
 [https://github.com/cjkpl/dj-apps-cjk404](https://github.com/cjkpl/dj-apps-cjk404)
 
 ### New URL:
-[https://github.com/cjkpl/django-cjk404](https://github.com/cjkpl/django-cjk404)
+[https://github.com/cjkpl/wagtail-cjk404](https://github.com/cjkpl/wagtail-cjk404)
 
 Please migrate your local repositories to the new URL by executing:
 ```
-$ git remote set-url origin https://github.com/cjkpl/django-cjk404
+$ git remote set-url origin https://github.com/cjkpl/wagtail-cjk404
 ```
