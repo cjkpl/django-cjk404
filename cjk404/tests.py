@@ -4,7 +4,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.test.utils import override_settings
 from django.core.cache import cache
-from wagtail.core.models import Site, Page
+from wagtail.models import Site, Page
 from typing import Union, Optional
 
 from cjk404.middleware import (

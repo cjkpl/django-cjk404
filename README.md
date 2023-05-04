@@ -50,12 +50,12 @@ This package is used for the admin panel itself.
 ## Screenshots
 
 #### "All Redirects" in the Backend
+!["All Redirects" in the Backend"](https://user-images.githubusercontent.com/34211633/236237989-3c396246-53ee-4d57-91cf-31b9333fb47a.png)
 
-!["All Redirects" in the Backend"](https://raw.githubusercontent.com/cjkpl/wagtail-cjk404/main/docs/All%20Redirects.jpg)
 
 #### "Edit Redirect" in the Backend 
+!["Edit Redirect" in the Backend"](https://user-images.githubusercontent.com/34211633/236238437-33c856ca-592b-4235-9d15-5c1953d0ade3.png)
 
-!["Edit Redirect" in the Backend](https://raw.githubusercontent.com/cjkpl/wagtail-cjk404/main/docs/Edit%20Redirect.jpg)
 
 ### Usage
 
