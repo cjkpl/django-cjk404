@@ -9,7 +9,7 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.utils.timezone import now
 
 from .models import PageNotFoundEntry
-from wagtail.core.models import Site
+from wagtail.models import Site
 
 IGNORED_404S = getattr(settings, "IGNORED_404S", [r"^/static/", r"^/favicon.ico"])
 
