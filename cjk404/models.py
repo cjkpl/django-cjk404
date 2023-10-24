@@ -11,7 +11,7 @@ class PageNotFoundEntry(models.Model):
         verbose_name="Site",
     )
 
-    url = models.CharField(max_length=400, verbose_name="Redirect from URL")
+    url = models.CharField(max_length=1000, verbose_name="Redirect from URL")
     redirect_to_url = models.CharField(
         max_length=400,
         null=True,
