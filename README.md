@@ -70,7 +70,7 @@ This package is used for the admin panel itself.
 ```python
 INSTALLED_APPS = [
     ...
-    'wagtail.contrib.modeladmin', # required dependency
+    'wagtail_modeladmin', # required dependency
     'cjk404'
     ...
 ]
