@@ -1,8 +1,4 @@
-from unittest.case import skipUnless
-
-from django.conf import settings
 from django.test import TestCase
-from django.test.utils import override_settings
 from django.core.cache import cache
 from wagtail.models import Site, Page
 from typing import Union, Optional
@@ -64,7 +60,7 @@ class Cjk404RedirectTests(TestCase):
             self.assertRedirects(response, expected_redirect_url)
 
     def test_model(self):
-        site = Site.objects.filter(is_default_site=True)[0]
+        # site = Site.objects.filter(is_default_site=True)[0]
         r1 = self.create_redirect("/initial/", "/new_target/")
         self.assertEqual(r1.__str__(), "/initial/ ---> /new_target/")
 
@@ -86,34 +82,49 @@ class Cjk404RedirectTests(TestCase):
         pnfe = self.create_redirect("/initial2/", "/new_target/", None, True)
         self.assertEqual(pnfe.hits, 0)
         self.redirect_url("/initial2/", "/new_target/", 301)
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
     def test_simple_redirect(self):
         pnfe = self.create_redirect("/news/index/b/", "/new_target/")
         self.redirect_url("/news/index/b/", "/new_target/", 302)
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
     def test_premanent_regular_expression_without_wildcard(self):
         pnfe = self.create_redirect("/news/index/b/", "/new_target/", None, True)
         self.redirect_url("/news/index/b/", "/new_target/", 301)
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
     def test_regular_expression_witout_replacement(self):
         pnfe = self.create_redirect("/news/index/.*/", "/news/boo/b/")
+        self.assertEqual(pnfe.hits, 0)
         self.redirect_url(
             "/news/index/.*/",
             "/news/boo/b/",
             302,
         )
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
     def test_regular_expression_with_replacement_302(self):
         pnfe = self.create_redirect(
             "/news01/index/(.*)/", "/news02/boo/$1/", None, False, True
         )
+        self.assertEqual(pnfe.hits, 0)
         self.redirect_url("/news01/index/b/", "/news02/boo/b/", 302, 404)
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
     def test_regular_expression_with_replacement_301(self):
-        pnfe1 = self.create_redirect(
+        pnfe = self.create_redirect(
             "/news03/index/(.*)/", "/news04/boo/$1/", None, True, True
         )
+        self.assertEqual(pnfe.hits, 0)
         self.redirect_url("/news03/index/b/", "/news04/boo/b/", 301, 404)
+        pnfe.refresh_from_db()
+        self.assertEqual(pnfe.hits, 1)
 
     def test_fallback_redirects(self):
         """

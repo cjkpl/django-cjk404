@@ -1,10 +1,6 @@
 import re
-from sys import stdout
-
-from django import http
 from django.conf import settings
 from django.core.cache import cache
-from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.utils.timezone import now
 
